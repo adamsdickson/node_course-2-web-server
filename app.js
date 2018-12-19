@@ -2,22 +2,22 @@ const fs = require("fs");
 
 const express =require('express');
 
+var hbs = require('hbs');
+
+const port = process.env.port || 3000;
+
 var app = express();
 
-var hbs = require('hbs');
+
 hbs.registerPartials(__dirname + '/views/partials');
 
-
 app.set('view engine', 'hbs');
-
-
 
 app.use((req,res,next)=>{
     var now = new Date().toString();
     var log = `${now}: ${req.method} and ${req.url} `;
     console.log(log);
     fs.appendFile("server", log+ "\n")
-
 
     next()
 });
@@ -54,4 +54,4 @@ app.get('/about', (req,res)=>{
 });
 
 
-app.listen(3000, ()=>{console.log("App is now running")});
+app.listen(port, ()=>{console.log(`App is now running on port ${port}`)});
