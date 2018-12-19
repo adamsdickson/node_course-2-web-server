@@ -18,7 +18,6 @@ app.use((req,res,next)=>{
     var log = `${now}: ${req.method} and ${req.url} `;
     console.log(log);
     fs.appendFile("server", log+ "\n")
-
     next()
 });
 
