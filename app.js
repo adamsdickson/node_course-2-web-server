@@ -7,50 +7,35 @@ var hbs = require('hbs');
 const port = process.env.PORT || 3000;
 
 var app = express();
+hbs.registerPartials(__dirname + "/views/partials");
 
-
-hbs.registerPartials(__dirname + '/views/partials');
-
-app.set('view engine', 'hbs');
-
-app.use((req,res,next)=>{
-    var now = new Date().toString();
-    var log = `${now}: ${req.method} and ${req.url} `;
-    console.log(log);
-    fs.appendFile("server", log+ "\n")
-    next()
+hbs.registerHelper('getDate', ()=>{
+    return new Date().getFullYear()
 });
 
-app.use(express.static(__dirname+'/public'));
-
-app.use((req,res,next)=>{
-    res.render("main.hbs")
-    next()
+hbs.registerHelper('large', (text)=>{
+    return text.toUpperCase();
 });
 
+app.set("view engine", "hbs");
 
-hbs.registerHelper("Magic", (test)=>{
-    return test.toUpperCase();
+app.get("/",(req,res)=>{
+    res.render("home.hbs",{
+        title:"Home Page",
+        message:"All our message here"
+    })
 });
 
-
-
-app.get("/", (req,res)=>{
-    res.render("home.hbs", {
-        title:"Home",
-        message:"Welcome On board"
+app.get("/about",(req, res)=>{
+    res.render("about.hbs",{
+        title:"About us",
+        message:"Here is everything about us."
 
     })
-
 });
 
-app.get('/about', (req,res)=>{
-    res.render('about.hbs', {
-        title:"Calling",
-        subject:"Nothing"
-    });
-
-});
+app.use(express.static(__dirname + "/public"));
 
 
-app.listen(port, ()=>{console.log(`App is now running on port ${port}`)});
+
+app.listen(3000)
