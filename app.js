@@ -35,6 +35,14 @@ app.get("/about",(req, res)=>{
     })
 });
 
+app.get("/project",(req, res)=>{
+    res.render("projects.hbs",{
+        title:"Our Projects",
+        message:"See our latest work below."
+
+    })
+});
+
 app.use(express.static(__dirname + "/public"));
 
 
