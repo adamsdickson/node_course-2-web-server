@@ -1,10 +1,11 @@
 const fs = require("fs");
 
+const port= process.env.PORT || 3000;
+
 const express =require('express');
 
 var hbs = require('hbs');
 
-const port = process.env.PORT || 3000;
 
 var app = express();
 hbs.registerPartials(__dirname + "/views/partials");
@@ -38,4 +39,4 @@ app.use(express.static(__dirname + "/public"));
 
 
 
-app.listen(3000)
+app.listen(port)
